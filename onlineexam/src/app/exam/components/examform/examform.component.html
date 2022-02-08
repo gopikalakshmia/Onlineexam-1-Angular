@@ -1,0 +1,14 @@
+<p>examform works!</p>
+<div class="container" >
+    <form [formGroup]="questionform" (ngSubmit)="submit()">
+        <div class="form-group" *ngFor="let q of Questions">
+            <label class="form-label">{{q.question}}</label><br/>
+            <input type="radio"  formControlName="answers" [value]="q.answers.answer_a">{{q.answers.answer_a}}
+            <input type="radio" formControlName="answers" [value]="q.answers.answer_b">{{q.answers.answer_b}}
+            <input type="radio" formControlName="answers" [value]="q.answers.answer_c">{{q.answers.answer_c}}
+            <input type="radio" formControlName="answers"  [value]="q.answers.answer_d">{{q.answers.answer_d}}
+            
+        </div>
+        <input type="button" (click)="submit()">submit
+    </form>
+</div>
