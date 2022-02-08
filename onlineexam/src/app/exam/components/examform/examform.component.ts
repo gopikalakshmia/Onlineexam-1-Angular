@@ -11,6 +11,8 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class ExamformComponent implements OnInit {
  Questions: Quesmodel[];
   questionform!: FormGroup;
+  correctAnswer:number=0;
+  wrongAnswer:number=0;
 
   constructor( public form:FormBuilder,private questionservice:QuestionService) {
     this.questionform=new FormGroup({});
@@ -28,10 +30,8 @@ export class ExamformComponent implements OnInit {
     this.questionservice.getQuestion().subscribe(
       (que)=>
       {this.Questions=que;
-        console.log(this.Questions);
         this.Questions.forEach(q=>{
           if(this.questionform!=undefined){
-            console.log(q.question);
             this.questionform.addControl(q.question.toString(),new FormControl(""));
           }})},
       (err)=>console.log(err),
@@ -39,7 +39,45 @@ export class ExamformComponent implements OnInit {
     );
   }
   submit(){
-    console.log(this.questionform.value);
+
+    this.Questions.forEach(q=>
+      {
+        if(q.correct_answers.answer_a_correct){
+          if(q.answers.answer_a==(this.questionform.get(q.question)?.value)){
+            console.log("correct answer");
+            this.correctAnswer++;
+          }
+          else
+          this.wrongAnswer++;
+        }
+        else if(q.correct_answers.answer_b_correct){
+          if(q.answers.answer_b==(this.questionform.get(q.question)?.value)){
+            console.log("correct answer");
+            this.correctAnswer++;
+          }
+          else
+          this.wrongAnswer++;
+        }
+        else if(q.correct_answers.answer_c_correct){
+          if(q.answers.answer_c==(this.questionform.get(q.question)?.value)){
+            console.log("correct answer");
+            this.correctAnswer++;
+          }
+          else
+          this.wrongAnswer++;
+        }
+        else if(q.correct_answers.answer_d_correct){
+          if(q.answers.answer_d==(this.questionform.get(q.question)?.value)){
+            console.log("correct answer");
+            this.correctAnswer++;
+          }
+          else
+          this.wrongAnswer++;
+        }}
+    )
+
+    alert("No: of Correct Answer"+this.correctAnswer +" No:of Wrong answers :"+this.wrongAnswer);
+    
   }
 
 }
