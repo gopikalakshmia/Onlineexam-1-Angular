@@ -1,3 +1,5 @@
+import { Quesmodel } from './../../../models/question/quesmodel';
+import { QuestionService } from './../../../services/question/question.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
@@ -7,80 +9,34 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./examform.component.css']
 })
 export class ExamformComponent implements OnInit {
- Questions=[
-  {
-    "id": 1,
-    "question": "How to delete a directory in Linux?",
-    "description": "delete folder",
-    "answers": {
-      "answer_a": "ls",
-      "answer_b": "delete",
-      "answer_c": "remove",
-      "answer_d": "rmdir",
-      "answer_e": null,
-      "answer_f": null
-    },
-    "multiple_correct_answers": "false",
-    "correct_answers": {
-      "answer_a_correct": "false",
-      "answer_b_correct": "false",
-      "answer_c_correct": "false",
-      "answer_d_correct": "true",
-      "answer_e_correct": "false",
-      "answer_f_correct": "false"
-    },
-    "explanation": "rmdir deletes an empty directory",
-    "tip": null,
-    "tags": [],
-    "category": "linux",
-    "difficulty": "Easy"
-  },
-  {
-    "id": 2,
-    "question": "How to delete  in Linux?",
-    "description": "delete folder",
-    "answers": {
-      "answer_a": "ls",
-      "answer_b": "delete",
-      "answer_c": "remove",
-      "answer_d": "rmdir",
-      "answer_e": null,
-      "answer_f": null
-    },
-    "multiple_correct_answers": "false",
-    "correct_answers": {
-      "answer_a_correct": "false",
-      "answer_b_correct": "false",
-      "answer_c_correct": "false",
-      "answer_d_correct": "true",
-      "answer_e_correct": "false",
-      "answer_f_correct": "false"
-    },
-    "explanation": "rmdir deletes an empty directory",
-    "tip": null,
-    "tags": [],
-    "category": "linux",
-    "difficulty": "Easy"
-  },
-  
-]
+ Questions: Quesmodel[];
   questionform!: FormGroup;
 
-  constructor( public form:FormBuilder) {
+  constructor( public form:FormBuilder,private questionservice:QuestionService) {
     this.questionform=new FormGroup({});
+      
    }
 
   ngOnInit(): void {
 
+    this.getQuestion();
+  
 
-  this.Questions.forEach(q=>{
-  if(this.questionform!=undefined){
-    console.log(q.question);
-    this.questionform.addControl(q.question.toString(),new FormControl(""));
   }
-}
-  )
 
+  getQuestion(){
+    this.questionservice.getQuestion().subscribe(
+      (que)=>
+      {this.Questions=que;
+        console.log(this.Questions);
+        this.Questions.forEach(q=>{
+          if(this.questionform!=undefined){
+            console.log(q.question);
+            this.questionform.addControl(q.question.toString(),new FormControl(""));
+          }})},
+      (err)=>console.log(err),
+      ()=>console.log("Done")
+    );
   }
   submit(){
     console.log(this.questionform.value);
