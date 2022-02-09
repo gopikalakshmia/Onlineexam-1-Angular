@@ -42,33 +42,37 @@ export class ExamformComponent implements OnInit {
 
     this.Questions.forEach(q=>
       {
-        if(q.correct_answers.answer_a_correct){
+        if(q.correct_answers.answer_a_correct=="true"){
           if(q.answers.answer_a==(this.questionform.get(q.question)?.value)){
             console.log("correct answer");
             this.correctAnswer++;
+            console.log(q.correct_answers.answer_a_correct);
           }
           else
           this.wrongAnswer++;
         }
-        else if(q.correct_answers.answer_b_correct){
+        else if(q.correct_answers.answer_b_correct=="true"){
           if(q.answers.answer_b==(this.questionform.get(q.question)?.value)){
             console.log("correct answer");
             this.correctAnswer++;
+            console.log(q.correct_answers.answer_b_correct);
           }
           else
           this.wrongAnswer++;
         }
-        else if(q.correct_answers.answer_c_correct){
+        else if(q.correct_answers.answer_c_correct=="true"){
           if(q.answers.answer_c==(this.questionform.get(q.question)?.value)){
             console.log("correct answer");
             this.correctAnswer++;
+            console.log(q.correct_answers.answer_c_correct);
           }
           else
           this.wrongAnswer++;
         }
-        else if(q.correct_answers.answer_d_correct){
+        else if(q.correct_answers.answer_d_correct=="true"){
           if(q.answers.answer_d==(this.questionform.get(q.question)?.value)){
             console.log("correct answer");
+            console.log(q.correct_answers.answer_d_correct);
             this.correctAnswer++;
           }
           else
