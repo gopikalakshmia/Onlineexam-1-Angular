@@ -2,6 +2,8 @@ import { Quesmodel } from './../../../models/question/quesmodel';
 import { QuestionService } from './../../../services/question/question.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { NavigationExtras, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-examform',
@@ -14,7 +16,7 @@ export class ExamformComponent implements OnInit {
   correctAnswer:number=0;
   wrongAnswer:number=0;
 
-  constructor( public form:FormBuilder,private questionservice:QuestionService) {
+  constructor( public form:FormBuilder,private questionservice:QuestionService,private router:Router) {
     this.questionform=new FormGroup({});
       
    }
@@ -80,7 +82,15 @@ export class ExamformComponent implements OnInit {
         }}
     )
 
-    alert("No: of Correct Answer"+this.correctAnswer +" No:of Wrong answers :"+this.wrongAnswer);
+    //alert("No: of Correct Answer"+this.correctAnswer +" No:of Wrong answers :"+this.wrongAnswer);
+   let score={correct:this.correctAnswer,wrong:this.wrongAnswer};
+   let navigationscore:NavigationExtras={
+     state:{
+       data:score
+     }
+   };
+       
+    this.router.navigate(['/score'],navigationscore);
     
   }
 
